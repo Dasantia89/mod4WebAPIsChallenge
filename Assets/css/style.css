@@ -1,8 +1,8 @@
 body{
     width: auto;
     height: auto;
-    padding: 10px;
-    background-color: black;
+    padding: 50px;
+    background-color: rgb(19, 18, 18);
 }
 
 header{
@@ -10,21 +10,44 @@ header{
     justify-content: space-between;
     padding: 10px 20px 10px 20px;
     color: white;
+    font-size: 20px;
     border: solid 5px white;
+    margin: 0 10% 0 10%;
+    width: 80%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 main{
  
-    height: 900px;
+    height: auto;
     width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin: 0 10% 0 10%;
     color: white;
+    border: solid 5px white;
+    padding: 20px 20px 20px 20px;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
-h1, h2,h3,p{
-   
+h1{
+   font-size: 100px;
+   margin-bottom: 20px;
 }
 
-h1 {
-    font-size:xx-large;
+.rules{
+    font-size: 50px;
+}
+
+#start{
+    margin-top: 20px;
+    width:300px;
+    padding: 10px;
+    background-color: blueviolet;
+    font-size: 30px;
+    color: white;
+    border-radius: 10px;
+}
+#start:hover, a:hover{
+    background-color: aqua;
 }
