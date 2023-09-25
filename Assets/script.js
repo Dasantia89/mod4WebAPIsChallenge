@@ -15,15 +15,16 @@ var questions = document.getElementById("rules");
 var answers = document.querySelectorAll(".answer");
 var timer = document.getElementById("timer");
 var check = document.querySelector("footer");
+var initials = document.getElementById("enterInitials");
 var x = 0;
 var time = 75;
-
+var timeInterval;
 
 
 function startFunction() {
     heading.style.display = "none";
     btn.style.display = "none";
-    check.style.display="none";
+   
     timer.textContent = time;
 
     // for (var x = 0; x < questionAnswer.length; x++) {
@@ -31,8 +32,6 @@ function startFunction() {
     for (var i = 0; i < answers.length; i++) {
         answers[i].style.display = "block";
         answers[i].textContent = questionAnswer[x][i + 1];
-        console.log(questionAnswer[x][i + 1]);
-
     }
     for (var z = 0; z < answers.length; z++) {
         answers[z].addEventListener("click", checkAnswer);
@@ -40,7 +39,7 @@ function startFunction() {
 
     // }
     if (x === 0) {
-        var timeInterval = setInterval(function () {
+        timeInterval = setInterval(function () {
             if (time > 0) {
                 time--;
                 timer.textContent = time;
@@ -51,22 +50,38 @@ function startFunction() {
 
 function checkAnswer(event) {
     choice = event.target.textContent;
- 
+
     if (questionAnswer[x][5] == choice) {
-        check.textContent = "Correct!"
+        check.textContent = "Correct!";
         check.style.display = "block";
-        setTimeout(function(){
-            check.style.display="none";
-        }, 1500);
         x++;
-        startFunction();
+        setTimeout(function () {
+            check.style.display = "none";
+            if(x==5){
+                clearInterval(timeInterval);
+                endGame();
+            }else{
+            startFunction();
+            }
+        }, 1000);
+    
     } else {
         time -= 10;
         check.textContent = "Incorrect.";
         check.style.display = "block";
-        setTimeout(function(){
-            check.style.display="none";
+        setTimeout(function () {
+            check.style.display = "none";
         }, 1500);
-    } 
+    }
 
+}
+
+function endGame(){
+    for (var i = 0; i < answers.length; i++) {
+        answers[i].style.display = "none";
+    }
+    heading.textContent = "All done!";
+    heading.style.display= "block";
+    questions.textContent  = "Your final score is " + time + ".";
+    initials.style.display="block";
 }

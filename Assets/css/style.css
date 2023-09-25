@@ -79,6 +79,22 @@ footer {
     font-size: 50px;
 }
 
+#initials{
+    width: auto;
+}
+#enterInitials{
+    display: none;
+    font-size: 50px;
+}
+
+#submit{
+    width: auto;
+    height: auto;
+    background-color: blueviolet;
+    
+    color: white;
+    border-radius: 10px;
+}
 
 @media screen and (max-width: 768px) {
     body {
