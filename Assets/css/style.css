@@ -1,0 +1,30 @@
+body{
+    width: auto;
+    height: auto;
+    padding: 10px;
+    background-color: black;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px 10px 20px;
+    color: white;
+    border: solid 5px white;
+}
+main{
+ 
+    height: 900px;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    color: white;
+}
+
+h1, h2,h3,p{
+   
+}
+
+h1 {
+    font-size:xx-large;
+}
