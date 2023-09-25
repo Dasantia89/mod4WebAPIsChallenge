@@ -67,6 +67,6 @@ function checkAnswer(event) {
         setTimeout(function(){
             check.style.display="none";
         }, 1500);
-    }
+    } 
 
 }
