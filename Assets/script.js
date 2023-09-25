@@ -17,3 +17,34 @@ var timer = document.getElementById("timer");
 var check = document.querySelector("footer");
 var x = 0;
 var time = 75;
+
+
+
+function startFunction() {
+    heading.style.display = "none";
+    btn.style.display = "none";
+    check.style.display="none";
+    timer.textContent = time;
+
+    // for (var x = 0; x < questionAnswer.length; x++) {
+    questions.textContent = questionAnswer[x][0];
+    for (var i = 0; i < answers.length; i++) {
+        answers[i].style.display = "block";
+        answers[i].textContent = questionAnswer[x][i + 1];
+        console.log(questionAnswer[x][i + 1]);
+
+    }
+    for (var z = 0; z < answers.length; z++) {
+        answers[z].addEventListener("click", checkAnswer);
+    }
+
+    // }
+    if (x === 0) {
+        var timeInterval = setInterval(function () {
+            if (time > 0) {
+                time--;
+                timer.textContent = time;
+            }
+        }, 1000)
+    }
+}
