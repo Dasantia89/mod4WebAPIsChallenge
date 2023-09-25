@@ -48,3 +48,25 @@ function startFunction() {
         }, 1000)
     }
 }
+
+function checkAnswer(event) {
+    choice = event.target.textContent;
+ 
+    if (questionAnswer[x][5] == choice) {
+        check.textContent = "Correct!"
+        check.style.display = "block";
+        setTimeout(function(){
+            check.style.display="none";
+        }, 1500);
+        x++;
+        startFunction();
+    } else {
+        time -= 10;
+        check.textContent = "Incorrect.";
+        check.style.display = "block";
+        setTimeout(function(){
+            check.style.display="none";
+        }, 1500);
+    }
+
+}
