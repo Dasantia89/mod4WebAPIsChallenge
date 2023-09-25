@@ -83,5 +83,6 @@ function endGame(){
     heading.textContent = "All done!";
     heading.style.display= "block";
     questions.textContent  = "Your final score is " + time + ".";
-    initials.style.display="block";
+    initials.style.display="flex";
+    initials.style.justifyContent="center";
 }
