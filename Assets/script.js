@@ -19,38 +19,41 @@ var initials = document.getElementById("enterInitials");
 var textBox = document.getElementById("initials");
 var submit = document.getElementById("submit");
 var highScores = document.getElementById("highScores");
+var link = document.getElementById("highScoreLink");
 var x = 0;
 var time = 75;
 var timeInterval;
 var scores = JSON.parse(localStorage.getItem("scores")) || [];
+link.addEventListener("click", displayHighScores);
 getScores();
 home();
-function init(){
+function init() {
     x = 0;
     time = 75;
     timer.textContent = "Time: " + time;
     getScores();
     var scoreButtons = document.querySelectorAll(".scoreBtn");
-    for(var z = 0; z<scoreButtons.length;z++){
+    for (var z = 0; z < scoreButtons.length; z++) {
         scoreButtons[z].remove();
     }
+    highScores.innerHTML = "";
     home();
 }
 
-function getScores(){
+function getScores() {
     scores = JSON.parse(localStorage.getItem("scores")) || [];
 
 }
 
-function home(){
+function home() {
     heading.textContent = "Coding Quiz Challenge";
-    questions.textContent =  "Answer the following questions within the time limit. "+ 
-    "Each incorrect answer will subtract 10 seconds from the timer. If the time runs out, you lose!";
+    questions.textContent = "Answer the following questions within the time limit. " +
+        "Each incorrect answer will subtract 10 seconds from the timer. If the time runs out, you lose!";
     btn.style.display = "block";
 }
 
 function startFunction() {
- 
+
     heading.style.display = "none";
     btn.style.display = "none";
 
@@ -148,13 +151,30 @@ function saveScore(event) {
 }
 
 function displayHighScores() {
+    var scoreButtons = document.querySelectorAll(".scoreBtn");
+    for (var z = 0; z < scoreButtons.length; z++) {
+        scoreButtons[z].remove();
+    }
+    highScores.innerHTML = "";
+    btn.style.display = "none";
     heading.textContent = "High Scores";
     initials.style.display = "none";
     questions.textContent = "";
     getScores();
+    var backBtn = document.createElement("button");
+    var clearBtn = document.createElement("button");
+    backBtn.className = "scoreBtn";
+    backBtn.textContent = "Back";
+    clearBtn.className = "scoreBtn";
+    clearBtn.textContent = "Clear";
+    main.appendChild(backBtn);
+    main.append(clearBtn);
+    backBtn.addEventListener("click", init);
+    clearBtn.addEventListener("click", clearHighScores);
+
     if (scores.length === 0) {
         questions.textContent = "No High Scores"
-        
+
     } else {
         for (var y = 0; y < scores.length; y++) {
             var hiScore = document.createElement("li");
@@ -162,19 +182,10 @@ function displayHighScores() {
             highScores.appendChild(hiScore);
             highScores.style.display = "block";
         }
-        var backBtn = document.createElement("button");
-        var clearBtn = document.createElement("button");
-        backBtn.className = "scoreBtn";
-        backBtn.textContent = "Back";
-        clearBtn.className = "scoreBtn";
-        clearBtn.textContent = "Clear";
-        main.appendChild(backBtn);
-        main.append(clearBtn);
-        backBtn.addEventListener("click", init);
-        clearBtn.addEventListener("click", clearHighScores);
+
     }
 
-   
+
 
 }
 
