@@ -19,13 +19,13 @@ var initials = document.getElementById("enterInitials");
 var x = 0;
 var time = 75;
 var timeInterval;
-
+var scores = localStorage.JSON.parse("scores") || { initials:"",score:0};
 
 function startFunction() {
     heading.style.display = "none";
     btn.style.display = "none";
    
-    timer.textContent = time;
+    timer.textContent = "Time: " + time;
 
     // for (var x = 0; x < questionAnswer.length; x++) {
     questions.textContent = questionAnswer[x][0];
@@ -42,7 +42,7 @@ function startFunction() {
         timeInterval = setInterval(function () {
             if (time > 0) {
                 time--;
-                timer.textContent = time;
+                timer.textContent = "Time: " + time;
             }
         }, 1000)
     }
@@ -83,6 +83,9 @@ function endGame(){
     heading.textContent = "All done!";
     heading.style.display= "block";
     questions.textContent  = "Your final score is " + time + ".";
+
+    // .sort(function(a, b){return b-a});
+
     initials.style.display="flex";
     initials.style.justifyContent="center";
 }
