@@ -134,6 +134,9 @@ footer {
         width: auto;
         height: auto;
     }
-
+    #enterInitials{
+        display: none;
+        font-size: 30px;
+    }
 
 }
