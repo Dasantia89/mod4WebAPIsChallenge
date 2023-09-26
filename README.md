@@ -8,7 +8,7 @@ Code Quiz
 
 
 
-
+![Alt text](./Assets/Images/image.png)
 
 ##Citations
 https://www.geeksforgeeks.org/javascript-multidimensional-array/
