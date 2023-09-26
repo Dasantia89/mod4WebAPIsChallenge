@@ -23,8 +23,34 @@ var x = 0;
 var time = 75;
 var timeInterval;
 var scores = JSON.parse(localStorage.getItem("scores")) || [];
+getScores();
+home();
+function init(){
+    x = 0;
+    time = 75;
+    timer.textContent = "Time: " + time;
+    getScores();
+    var scoreButtons = document.querySelectorAll(".scoreBtn");
+    for(var z = 0; z<scoreButtons.length;z++){
+        scoreButtons[z].remove();
+    }
+    home();
+}
+
+function getScores(){
+    scores = JSON.parse(localStorage.getItem("scores")) || [];
+
+}
+
+function home(){
+    heading.textContent = "Coding Quiz Challenge";
+    questions.textContent =  "Answer the following questions within the time limit. "+ 
+    "Each incorrect answer will subtract 10 seconds from the timer. If the time runs out, you lose!";
+    btn.style.display = "block";
+}
 
 function startFunction() {
+ 
     heading.style.display = "none";
     btn.style.display = "none";
 
@@ -46,7 +72,7 @@ function startFunction() {
             if (time > 0) {
                 time--;
                 timer.textContent = "Time: " + time;
-            }else{
+            } else {
                 endGame();
             }
         }, 1000)
@@ -65,7 +91,7 @@ function checkAnswer(event) {
         setTimeout(function () {
             check.style.display = "none";
             if (x == 5) {
-                
+
                 endGame();
             } else {
                 startFunction();
@@ -88,10 +114,10 @@ function endGame() {
     for (var i = 0; i < answers.length; i++) {
         answers[i].style.display = "none";
     }
-    if(time <= 0){
+    if (time <= 0) {
         heading.textContent = "Time's up!";
 
-    }else{
+    } else {
         heading.textContent = "All done!";
 
     }
@@ -110,43 +136,59 @@ function saveScore(event) {
             initial: textBox.value,
             score: time
         };
-        
+        textBox.value = "";
         scores.push(result);
         scores = scores.sort(compare);
         localStorage.setItem("scores", JSON.stringify(scores));
         displayHighScores();
         // .sort(function(a, b){return b-a});
-    }else{
+    } else {
         alert("Initials required.");
     }
 }
 
-function displayHighScores(){
+function displayHighScores() {
     heading.textContent = "High Scores";
-    initials.style.display="none";
+    initials.style.display = "none";
     questions.textContent = "";
-    for(var y = 0; y<scores.length; y++){
-        var hiScore = document.createElement("li");
-        hiScore.textContent += y+1 + ". " + scores[y].initial + " - " + scores[y].score;
-        highScores.appendChild(hiScore);
+    getScores();
+    if (scores.length === 0) {
+        questions.textContent = "No High Scores"
+        
+    } else {
+        for (var y = 0; y < scores.length; y++) {
+            var hiScore = document.createElement("li");
+            hiScore.textContent += y + 1 + ". " + scores[y].initial + " - " + scores[y].score;
+            highScores.appendChild(hiScore);
+            highScores.style.display = "block";
+        }
+        var backBtn = document.createElement("button");
+        var clearBtn = document.createElement("button");
+        backBtn.className = "scoreBtn";
+        backBtn.textContent = "Back";
+        clearBtn.className = "scoreBtn";
+        clearBtn.textContent = "Clear";
+        main.appendChild(backBtn);
+        main.append(clearBtn);
+        backBtn.addEventListener("click", init);
+        clearBtn.addEventListener("click", clearHighScores);
     }
-    highScores.style.display = "block";
-    var backBtn = document.createElement("button");
-    var clearBtn = document.createElement("button");
-    backBtn.className = "scoreBtn";
-    backBtn.textContent = "Back";
-    clearBtn.className = "scoreBtn";
-    clearBtn.textContent = "Clear";
-    main.appendChild(backBtn);
-    main.append(clearBtn);
+
+   
 
 }
 
-function compare(a,b) {
+function clearHighScores() {
+    console.log(scores);
+    highScores.innerHTML = "";
+    localStorage.removeItem("scores");
+    alert("Scores have been cleared.");
+    displayHighScores();
+}
+function compare(a, b) {
     if (a.score < b.score)
-       return 1;
+        return 1;
     if (a.score > b.score)
-      return -1;
+        return -1;
     return 0;
-  }
-  
+}
