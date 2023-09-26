@@ -45,9 +45,13 @@ function startFunction() {
             if (time > 0) {
                 time--;
                 timer.textContent = "Time: " + time;
+            }else{
+                endGame();
             }
         }, 1000)
     }
+
+
 }
 
 function checkAnswer(event) {
@@ -60,7 +64,7 @@ function checkAnswer(event) {
         setTimeout(function () {
             check.style.display = "none";
             if (x == 5) {
-                clearInterval(timeInterval);
+                
                 endGame();
             } else {
                 startFunction();
@@ -79,18 +83,22 @@ function checkAnswer(event) {
 }
 
 function endGame() {
+    clearInterval(timeInterval);
     for (var i = 0; i < answers.length; i++) {
         answers[i].style.display = "none";
     }
-    heading.textContent = "All done!";
+    if(time <= 0){
+        heading.textContent = "Time's up!";
+
+    }else{
+        heading.textContent = "All done!";
+
+    }
     heading.style.display = "block";
     questions.textContent = "Your final score is " + time + ".";
     initials.style.display = "flex";
     initials.style.justifyContent = "center";
     submit.addEventListener("click", saveScore);
-
-
-
 }
 
 function saveScore(event) {
