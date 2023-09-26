@@ -80,7 +80,11 @@ footer {
 }
 
 #initials{
-    width: auto;
+    width: 10%;
+    height: 60px;
+    font-size: 50px;
+    text-align: center;
+    margin-right: 5px;
 }
 #enterInitials{
     display: none;
@@ -125,6 +129,10 @@ footer {
 
     #rules {
         font-size: 20px;
+    }
+    #initials{
+        width: auto;
+        height: auto;
     }
 
 

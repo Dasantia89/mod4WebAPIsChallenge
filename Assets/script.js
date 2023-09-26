@@ -16,15 +16,17 @@ var answers = document.querySelectorAll(".answer");
 var timer = document.getElementById("timer");
 var check = document.querySelector("footer");
 var initials = document.getElementById("enterInitials");
+var textBox = document.getElementById("initials");
+var submit = document.getElementById("submit");
 var x = 0;
 var time = 75;
 var timeInterval;
-var scores = localStorage.JSON.parse("scores") || { initials:"",score:0};
+var scores = JSON.parse(localStorage.getItem("scores")) || [];
 
 function startFunction() {
     heading.style.display = "none";
     btn.style.display = "none";
-   
+
     timer.textContent = "Time: " + time;
 
     // for (var x = 0; x < questionAnswer.length; x++) {
@@ -57,14 +59,14 @@ function checkAnswer(event) {
         x++;
         setTimeout(function () {
             check.style.display = "none";
-            if(x==5){
+            if (x == 5) {
                 clearInterval(timeInterval);
                 endGame();
-            }else{
-            startFunction();
+            } else {
+                startFunction();
             }
         }, 1000);
-    
+
     } else {
         time -= 10;
         check.textContent = "Incorrect.";
@@ -76,16 +78,32 @@ function checkAnswer(event) {
 
 }
 
-function endGame(){
+function endGame() {
     for (var i = 0; i < answers.length; i++) {
         answers[i].style.display = "none";
     }
     heading.textContent = "All done!";
-    heading.style.display= "block";
-    questions.textContent  = "Your final score is " + time + ".";
+    heading.style.display = "block";
+    questions.textContent = "Your final score is " + time + ".";
+    initials.style.display = "flex";
+    initials.style.justifyContent = "center";
+    submit.addEventListener("click", saveScore);
 
-    // .sort(function(a, b){return b-a});
 
-    initials.style.display="flex";
-    initials.style.justifyContent="center";
+
+}
+
+function saveScore(event) {
+    if (textBox.value != "") {
+        var result = {
+            initial: textBox.value,
+            score: time
+        };
+        
+        scores.push(result);
+        localStorage.setItem("scores", JSON.stringify(scores));
+        // .sort(function(a, b){return b-a});
+    }else{
+        alert("Initials required.");
+    }
 }
