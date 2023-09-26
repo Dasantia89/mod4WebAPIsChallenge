@@ -7,7 +7,7 @@ var questionAnswer = [
     ["String values must be enclosed within ______ when being assigned to variables.", "commas", "curly brackets", "quotes", "parenthesis", "quotes"],
     [" A very useful tool used during development and debugging for printing content to the debugger is:", "JavaScript", "terminal/bash", "for loops", "console.log", "console.log"]
 ];
-
+var main = document.querySelector("main");
 var btn = document.getElementById("start");
 btn.addEventListener("click", startFunction);
 var heading = document.getElementById("heading");
@@ -18,6 +18,7 @@ var check = document.querySelector("footer");
 var initials = document.getElementById("enterInitials");
 var textBox = document.getElementById("initials");
 var submit = document.getElementById("submit");
+var highScores = document.getElementById("highScores");
 var x = 0;
 var time = 75;
 var timeInterval;
@@ -97,6 +98,8 @@ function endGame() {
     heading.style.display = "block";
     questions.textContent = "Your final score is " + time + ".";
     initials.style.display = "flex";
+    initials.style.flexDirection = "column";
+    initials.style.alignItems = "center";
     initials.style.justifyContent = "center";
     submit.addEventListener("click", saveScore);
 }
@@ -109,9 +112,41 @@ function saveScore(event) {
         };
         
         scores.push(result);
+        scores = scores.sort(compare);
         localStorage.setItem("scores", JSON.stringify(scores));
+        displayHighScores();
         // .sort(function(a, b){return b-a});
     }else{
         alert("Initials required.");
     }
 }
+
+function displayHighScores(){
+    heading.textContent = "High Scores";
+    initials.style.display="none";
+    questions.textContent = "";
+    for(var y = 0; y<scores.length; y++){
+        var hiScore = document.createElement("li");
+        hiScore.textContent += y+1 + ". " + scores[y].initial + " - " + scores[y].score;
+        highScores.appendChild(hiScore);
+    }
+    highScores.style.display = "block";
+    var backBtn = document.createElement("button");
+    var clearBtn = document.createElement("button");
+    backBtn.className = "scoreBtn";
+    backBtn.textContent = "Back";
+    clearBtn.className = "scoreBtn";
+    clearBtn.textContent = "Clear";
+    main.appendChild(backBtn);
+    main.append(clearBtn);
+
+}
+
+function compare(a,b) {
+    if (a.score < b.score)
+       return 1;
+    if (a.score > b.score)
+      return -1;
+    return 0;
+  }
+  
