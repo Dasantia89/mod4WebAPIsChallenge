@@ -151,6 +151,11 @@ function saveScore(event) {
 }
 
 function displayHighScores() {
+    clearInterval(timeInterval);
+    for(var p = 0; p<answers.length; p++){
+        answers[p].style.display ="none";
+    }
+
     var scoreButtons = document.querySelectorAll(".scoreBtn");
     for (var z = 0; z < scoreButtons.length; z++) {
         scoreButtons[z].remove();
