@@ -1,5 +1,6 @@
 //Assignment Code
 
+// Create a 2 dimensional array where each element is the question followed by the possible answers and then the correct answer
 var questionAnswer = [
     ["Commonly used data types DO NOT include:", "strings", "booleans", "alerts", "numbers", "alerts"],
     ["The condition in an if / else statement is enclosed with ___________.", "quotes", "curly brackets", "parenthesis", "square brackets", "parenthesis"],
@@ -7,9 +8,10 @@ var questionAnswer = [
     ["String values must be enclosed within ______ when being assigned to variables.", "commas", "curly brackets", "quotes", "parenthesis", "quotes"],
     [" A very useful tool used during development and debugging for printing content to the debugger is:", "JavaScript", "terminal/bash", "for loops", "console.log", "console.log"]
 ];
+
+// Get references to all the needed elements and make them global so they can be accessed in any function 
 var main = document.querySelector("main");
 var btn = document.getElementById("start");
-btn.addEventListener("click", startFunction);
 var heading = document.getElementById("heading");
 var questions = document.getElementById("rules");
 var answers = document.querySelectorAll(".answer");
@@ -20,31 +22,28 @@ var textBox = document.getElementById("initials");
 var submit = document.getElementById("submit");
 var highScores = document.getElementById("highScores");
 var link = document.getElementById("highScoreLink");
+
+// add event listener to the start button to start the quiz  and one for the view high scores link
+btn.addEventListener("click", startFunction);
+link.addEventListener("click", displayHighScores);
+
+// initialize variables 
 var x = 0;
 var time = 75;
 var timeInterval;
-var scores = JSON.parse(localStorage.getItem("scores")) || [];
-link.addEventListener("click", displayHighScores);
+var scores;
+
+// Get scores from local storage and create home screen on first run
 getScores();
 home();
-function init() {
-    x = 0;
-    time = 75;
-    timer.textContent = "Time: " + time;
-    getScores();
-    var scoreButtons = document.querySelectorAll(".scoreBtn");
-    for (var z = 0; z < scoreButtons.length; z++) {
-        scoreButtons[z].remove();
-    }
-    highScores.innerHTML = "";
-    home();
-}
 
+// retrieve scores from localstorage and store them in scores variable 
 function getScores() {
     scores = JSON.parse(localStorage.getItem("scores")) || [];
 
 }
 
+// create the home screen 
 function home() {
     heading.textContent = "Coding Quiz Challenge";
     questions.textContent = "Answer the following questions within the time limit. " +
@@ -52,14 +51,13 @@ function home() {
     btn.style.display = "block";
 }
 
+// start button has been pressed so set the timer, fill in the question and the answers and listen for answer choice
 function startFunction() {
-
     heading.style.display = "none";
     btn.style.display = "none";
 
     timer.textContent = "Time: " + time;
 
-    // for (var x = 0; x < questionAnswer.length; x++) {
     questions.textContent = questionAnswer[x][0];
     for (var i = 0; i < answers.length; i++) {
         answers[i].style.display = "block";
@@ -69,7 +67,6 @@ function startFunction() {
         answers[z].addEventListener("click", checkAnswer);
     }
 
-    // }
     if (x === 0) {
         timeInterval = setInterval(function () {
             if (time > 0) {
@@ -84,6 +81,7 @@ function startFunction() {
 
 }
 
+// an answer was chosen. if correct, display correct and move on to the next question. if wrong display incorrect and subtract 10 seconds from the timer
 function checkAnswer(event) {
     choice = event.target.textContent;
 
@@ -112,6 +110,7 @@ function checkAnswer(event) {
 
 }
 
+// Either the timer reached 0 or all the questions have been answered. So retrieve user initials 
 function endGame() {
     clearInterval(timeInterval);
     for (var i = 0; i < answers.length; i++) {
@@ -133,6 +132,7 @@ function endGame() {
     submit.addEventListener("click", saveScore);
 }
 
+// Save initials and score into an object, stringify it, and save it to local storage
 function saveScore(event) {
     if (textBox.value != "") {
         var result = {
@@ -144,22 +144,23 @@ function saveScore(event) {
         scores = scores.sort(compare);
         localStorage.setItem("scores", JSON.stringify(scores));
         displayHighScores();
-        // .sort(function(a, b){return b-a});
     } else {
         alert("Initials required.");
     }
 }
 
+// First get rid of any unneeded elements from other functions, then Display high scores in descending order. Uf no scores, display "no high scores"
+// Create back and clear score buttons and listen for clicks 
 function displayHighScores() {
     clearInterval(timeInterval);
-    for(var p = 0; p<answers.length; p++){
-        answers[p].style.display ="none";
+    for (var p = 0; p < answers.length; p++) {
+        answers[p].style.display = "none";
     }
-
     var scoreButtons = document.querySelectorAll(".scoreBtn");
     for (var z = 0; z < scoreButtons.length; z++) {
         scoreButtons[z].remove();
     }
+
     highScores.innerHTML = "";
     btn.style.display = "none";
     heading.textContent = "High Scores";
@@ -189,18 +190,9 @@ function displayHighScores() {
         }
 
     }
-
-
-
 }
 
-function clearHighScores() {
-    console.log(scores);
-    highScores.innerHTML = "";
-    localStorage.removeItem("scores");
-    alert("Scores have been cleared.");
-    displayHighScores();
-}
+// Compare the score of each stored scores object and return a value to be able to sort them 
 function compare(a, b) {
     if (a.score < b.score)
         return 1;
@@ -208,3 +200,28 @@ function compare(a, b) {
         return -1;
     return 0;
 }
+
+
+// back button was clicked, so re initialize variables, reset timer and remove any unneeded elements.
+function init() {
+    x = 0;
+    time = 75;
+    timer.textContent = "Time: " + time;
+    getScores();
+    var scoreButtons = document.querySelectorAll(".scoreBtn");
+    for (var z = 0; z < scoreButtons.length; z++) {
+        scoreButtons[z].remove();
+    }
+    highScores.innerHTML = "";
+    home();
+}
+
+// Remove scores from localstorage
+function clearHighScores() {
+    console.log(scores);
+    highScores.innerHTML = "";
+    localStorage.removeItem("scores");
+    alert("Scores have been cleared.");
+    displayHighScores();
+}
+

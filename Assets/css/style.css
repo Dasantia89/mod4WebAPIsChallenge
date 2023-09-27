@@ -54,7 +54,7 @@ h1 {
 }
 
 #start:hover,
-a:hover {
+a:hover, .answer:hover, #submit:hover,.scoreBtn:hover {
     background-color: aqua;
 }
 
